@@ -1,0 +1,17 @@
+body{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.pizza_btn{
+  background-color: #FBB200;
+  border-radius:20px;
+  padding: 0.5rem 1rem;
+  border: 0;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+

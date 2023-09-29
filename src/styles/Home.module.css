@@ -1,0 +1,135 @@
+.pizza_banner{
+  background-color: #FBB21E;
+  border-radius: 100%;
+  position: relative;
+  -webkit-transform: translate(50%);
+  transform: translate(50%);
+  height: 710px;
+  margin-top: -90%
+}
+.pizza_banner img{
+  position: relative;
+  top: 70%;
+  
+}
+
+.home{
+  margin-top: 12rem
+}
+.pizza_home{
+  padding-top: 8rem;
+}
+.pizza_home h1{
+  font-size: 4.2rem;
+  width: 80%;
+  font-weight: bold;
+}
+.pizza_home p{
+  font-size: 2rem;
+}
+.pizza_home h1 span{
+  color: #ff0000;
+}
+
+.outline::before{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 15px);
+  width: 90px;
+  height: 2px;
+  transform: translateY(-50%);
+  background-color: #ff0000;
+}
+
+.pizza_main{
+  position: relative;
+  z-index: 20;
+  left: 2%;
+}
+.onion{
+  top: 50%;
+}
+.fresh_tasty{
+  display: flex;
+  padding: 6rem 1.5rem 0 3rem;
+}
+.popular{
+  padding-top: 5rem;
+}
+.cardbody h5{
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+.rating i{
+  color: #FBB200;
+}
+.daily_fresh{
+  flex-basis: 45%;
+}
+.daily_fresh h5{
+  font-weight: bold;
+  font-size: 2rem;
+}
+.daily_fresh p{
+  font-size: 1.2rem;
+  line-height: 2;
+  margin-top: 2rem;
+}
+.vacter{
+  padding: 8rem 1rem 0 3rem;
+}
+
+.section_tag h4{
+font-weight: bold;
+font-size: 2.5rem;
+}
+.section_tag h6{
+  font-size: 1.5rem;
+}
+.dishes_card{
+  margin-top: 3rem;
+}
+
+.dishes_strength img {
+  float: right;
+}
+.pizza_price, 
+.section_tag h6{
+  color: #ff0000;
+}
+
+.strength{
+  background-color: #FFFAED;
+  margin-top: 6rem;
+  padding:4rem 0;
+
+}
+.foods{
+  margin-top: -5rem;
+}
+.foods h4{
+  font-size: 1rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.testimonials{
+  margin-top: 4rem;
+  
+}
+.testimonials img{
+  border-radius: 50%;
+}
+.test_wrap, 
+.cardbody{
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #E4DED9;
+}
+.test_wrap{
+  padding:2rem;
+}
+.test_wrap p{
+  font-size: 1.2rem;
+}
