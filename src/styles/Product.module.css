@@ -1,7 +1,8 @@
 .product, .single_product{
    margin-top: 12rem;
 }
-.filter_btn{
+
+.filter_btn, .pizza_btn{
     background: #FBB200;
     color: #fff;
     font-size: 1.1rem;

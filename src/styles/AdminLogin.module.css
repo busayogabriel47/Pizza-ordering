@@ -1,0 +1,30 @@
+
+.login_wrapper{
+    margin-top: 10rem;
+}
+.login_form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6rem;
+}
+.login_form input{
+    padding: 0.5rem;
+}
+.login_form input, 
+.login_form button{
+    margin: 0.7rem 0;
+    width: 25%;
+}
+
+.login_form button{
+    height: 40px;
+    background-color: teal;
+    color: #fff;
+    border: 0;
+}
+.error{
+    color: #ff0000;
+    font-size: 14x;
+}

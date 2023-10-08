@@ -1,8 +1,112 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from '../styles/Cart.module.css'
-import Image from 'next/image'
+import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { reset } from '../../Redux/cartSlice';
+import axios from 'axios';
+
+//Paypal
+import {
+    PayPalScriptProvider,
+    PayPalButtons,
+    usePayPalScriptReducer
+} from "@paypal/react-paypal-js";
+import OrderDetail from '../../components/orderDetail';
+
+
+
 
 const Cart = () => {
+
+const dispatch = useDispatch();
+const cart = useSelector((state) => state.cart);
+
+const [open, setOpen] = useState(false)
+const [cash, setCash] = useState(false)
+
+
+// This value is from the props in the UI
+const amount = cart.total;
+const currency = "USD";
+const style = {"layout":"vertical"};
+
+const router = useRouter()
+
+//Paypal setup starts
+
+const createOrder = async (data) => {
+    try {
+      const res = await axios.post("http://localhost:3000/api/orders", data);
+      if (res.status === 201) {
+        dispatch(reset());
+        router.push(`/orders/${res.data._id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Custom component to wrap the PayPalButtons and handle currency changes
+  const ButtonWrapper = ({ currency, showSpinner }) => {
+    // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
+    // This is the main reason to wrap the PayPalButtons in a new component
+    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+
+    useEffect(() => {
+      dispatch({
+        type: "resetOptions",
+        value: {
+          ...options,
+          currency: currency,
+        },
+      });
+    }, [currency, showSpinner]);
+
+    return (
+      <>
+        {showSpinner && isPending && <div className="spinner" />}
+        <PayPalButtons
+          style={style}
+          disabled={false}
+          forceReRender={[amount, currency, style]}
+          fundingSource={undefined}
+          createOrder={(data, actions) => {
+            return actions.order
+              .create({
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: currency,
+                      value: amount,
+                    },
+                  },
+                ],
+              })
+              .then((orderId) => {
+                // Your code here after create the order
+                return orderId;
+              });
+          }}
+          onApprove={function (data, actions) {
+            return actions.order.capture().then(function (details) {
+              const shipping = details.purchase_units[0].shipping;
+              createOrder({
+                customer: shipping.name.full_name,
+                address: shipping.address.address_line_1,
+                total: cart.total,
+                method: 1,
+              });
+            });
+          }}
+        />
+      </>
+    );
+  };
+
+//Paypal setup ends
+
+
   return (
     <div className={`${styles.add_container} container-fluid`}>
         <div className={styles.table}>
@@ -18,66 +122,40 @@ const Cart = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+
+                {cart.products.map((product)=> (
+                        <tr key={product._id}>
                         <td>
-                            <Image src="/images/pizza-1.png" alt="" width={100} height={100} />
+                            <Image src={product.img} alt="" width={100} height={100} />
                         </td>
                         <td>
-                            <span className={styles.name}>CORALZO</span>
+                            <span className={styles.name}>{product.title}</span>
                         </td>
                         <td>
                             <span className={styles.extra}>
-                                Double ingredient, spicy sauce
+                                {product.extras.map((extra)=> (
+                                    <span key={extra._id}>{extra.text}</span>
+                                ))}
                             </span>
                         </td>
                         <td>
                             <span className={styles.price}>
-                                $19.90
+                                ${product.price}
                             </span>
                         </td>
                         <td>
                             <span className={styles.quantity}>
-                                2
+                                {product.quantity}
                             </span>
                         </td>
                         <td>
                             <span className={styles.total}>
-                                $39.80
+                                ${product.price * product.quantity}
                             </span>
                         </td>
                     </tr>
-
-                    <tr>
-                        <td>
-                            <Image src="/images/pizza-1.png" alt="" width={100} height={100} />
-                        </td>
-                        <td>
-                            <span className={styles.name}>CORALZO</span>
-                        </td>
-                        <td>
-                            <span className={styles.extra}>
-                                Double ingredient, spicy sauce
-                            </span>
-                        </td>
-                        <td>
-                            <span className={styles.price}>
-                                $19.90
-                            </span>
-                        </td>
-                        <td>
-                            <span className={styles.quantity}>
-                                2
-                            </span>
-                        </td>
-                        <td>
-                            <span className={styles.total}>
-                                $39.80
-                            </span>
-                        </td>
-                    </tr>
-
-                    
-                    
+                ))}
+                
                 </tbody>
             </table>
         </div>
@@ -87,7 +165,7 @@ const Cart = () => {
                     <h2 className={styles.title}>CART TOTAL</h2>
 
                     <div className={styles.total_text}>
-                    <b className={`${styles.total_title}`}>Subtotal:</b> $79.60
+                    <b className={`${styles.total_title}`}>Subtotal:</b> ${cart.total}
                     </div>
 
                     <div className={styles.total_text}>
@@ -95,11 +173,39 @@ const Cart = () => {
                     </div>
 
                     <div className={styles.total_text}>
-                    <b className={`${styles.total_title}`}>Total:</b> $79.60
+                    <b className={`${styles.total_title}`}>Total:</b> ${cart.total}
                     </div>
 
-                    <button className={`${styles.button} pizza_btn mt-5`}>CHECKOUT NOW!</button>
+
+                    {open ? (
+                        <div className={styles.payment}>
+                            <button className={`${styles.cash_payment}`} onClick={()=> setCash(true)}>
+                                CASH ON DELIVERY
+                            </button>
+
+                            {/* Paypal button*/}
+                            <PayPalScriptProvider
+                        options={{
+                            "clientId": "AZcDoI3i64YGRJwzroEjMwhyjlpGM3M6ZQPu5eWmhB-8jS6NRyUmA6msZfTLSEKQoyF8bDhYjAvy6brA",
+                            components: "buttons",
+                            currency: "USD",
+                            "disable-funding": "credit,card,p24"
+                        }}
+                        >
+                            <ButtonWrapper currency={currency} showSpinner={false}/>
+                        </PayPalScriptProvider>
+                        </div>
+                    ) : 
+                    
+                    <button onClick={()=> setOpen(true)} className={`${styles.button} pizza_btn mt-5`}>CHECKOUT NOW!</button>
+                    
+                    }
+                    
                 </div>
+                {cash && (
+                    <OrderDetail total={cart.total} createOrder={createOrder}/>
+                ) }
+                
         </div>
     </div>
   )

@@ -133,3 +133,11 @@ font-size: 2.5rem;
 .test_wrap p{
   font-size: 1.2rem;
 }
+.filter_btn, .pizza_btn{
+  background: #FBB200;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 0.8rem 1.7rem;
+  border-radius: 30px;
+  border: 0;
+}

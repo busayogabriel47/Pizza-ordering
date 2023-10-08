@@ -26,8 +26,15 @@
     text-align: center;
     width: 60%;
 }
-.navar_wrap{
-
+.cart{
+    display: flex;
+}
+.addCart i{
+    position: relative;
+    font-size: 1.5rem;
+}
+.addCart span{
+    right:5px
 }
 
 

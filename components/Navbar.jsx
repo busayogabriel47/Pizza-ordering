@@ -2,11 +2,15 @@ import Image from "next/image"
 import styles from "../src/styles/Navbar.module.css"
 import React from 'react';
 import Link from "next/link";
+import {useSelector} from 'react-redux'
 
 
 export default function Navbar() {
+
+const quantity = useSelector(state => state.cart.quantity)
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container}>  
         
         <div className={styles.pizza_header}>
              <Image src="/images/pizza-header-img.png" alt="" width={200} height={100}/>
@@ -39,8 +43,17 @@ export default function Navbar() {
                 </ul>
 
                 <div className={styles.cart}>
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                    <i className="fa-solid fa-cart-shopping"></i>
+                    <div className="">
+                        <i className="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <Link href="/cart" passHref>
+                        <div className={styles.addCart}>
+                            <i className="fa-solid fa-cart-shopping"></i>
+                            <span class="position-absolute translate-middle badge rounded-pill bg-danger">
+                                    {quantity}
+                            </span>
+                        </div>
+                    </Link>
                 </div>
                 </div>
             </div>

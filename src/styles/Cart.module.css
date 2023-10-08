@@ -31,4 +31,13 @@
     justify-content: center;
     color: #fff;
   }
+  .cash_payment{
+    width: 100%;
+    margin: 0.6rem 0;
+    border: 0;
+    padding: 2px;
+    background-color: #fff;
+    color: teal;
+    font-weight: 500;
+  }
 

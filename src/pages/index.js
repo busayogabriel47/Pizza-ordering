@@ -1,14 +1,15 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import PizzaList from '../../components/pizzaList'
+import axios from 'axios'
 
 const inter = Inter({ subsets: ['latin'] })
 
-{/* Home page component*/}
-export default function Home() {
+{/* Homepage component*/}
+export default function Home({pizzaList}) {
   return (
     <>
-    
       <div className='container-fluid'>
           <div className={`${styles.home} row`}>
             
@@ -55,77 +56,8 @@ export default function Home() {
               </div>
           </div>
 
-          {/* Popular Dishes*/}
-          <div className={`${styles.popular} row`}>
-              <div className={`${styles.section_tag} col-12 col-md-12`}>
-                        <h6 className={styles.outline}>Popular Dishes</h6>
-                        <h4>Browse our Menu</h4>
-              </div>
-            <div className={`${styles.dishes_card} col-12 col-md-4`}>
-                <div className={styles.cardbody}>
-                    <Image src="/images/pizza-1.png" alt="..." width="340" height="340"/>
-                    <div>
-                      <h5>Seafood pizza &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span className={styles.pizza_price}>$65.00</span></h5>
-                     <div className={`${styles.rating} py-3`}> 
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                      </div>
-                      <p>All the Lorem Ipsum generators on to Internet tend to repeat</p>
-                        <button className={`${styles.pizza_btn} my-3`}>
-                        <i className="fa-solid fa-cart-shopping"></i> &nbsp;
-                        ORDER NOW
-                        </button>
-
-                    </div>
-                  </div>
-              </div>
-
-              <div className={`${styles.dishes_card} col-12 col-md-4`}>
-                <div className={styles.cardbody}>
-                    <Image src="/images/pizza-1.png" alt="..." width="340" height="340"/>
-                    <div>
-                      <h5>Seafood pizza &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span className={styles.pizza_price}>$65.00</span></h5>
-                      <div className={`${styles.rating} py-3`}> 
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                      </div>
-                      <p>All the Lorem Ipsum generators on to Internet tend to repeat</p>
-                        <button className={`${styles.pizza_btn} my-3`}>
-                        <i className="fa-solid fa-cart-shopping"></i> &nbsp;
-                        ORDER NOW
-                        </button>
-                    </div>
-                  </div>
-              </div>
-
-              <div className={`${styles.dishes_card} col-12 col-md-4`}>
-                <div className={styles.cardbody}>
-                    <Image src="/images/pizza-1.png" alt="..." width="340" height="340"/>
-                    <div>
-                      <h5>Seafood pizza &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span className={styles.pizza_price}>$65.00</span></h5>
-                      <div className={`${styles.rating} py-3`}> 
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                          <i class="fa-solid fa-star"></i>
-                      </div>
-                      <p>All the Lorem Ipsum generators on to Internet tend to repeat</p>
-                        <button className={`${styles.pizza_btn} my-3`}>
-                        <i className="fa-solid fa-cart-shopping"></i> &nbsp;
-                        ORDER NOW
-                        </button>
-                    </div>
-                  </div>
-              </div>
-
-          </div>
+          {/* PizzaList*/}
+         <PizzaList pizzaList={pizzaList}/>
 
 
 
@@ -167,9 +99,7 @@ export default function Home() {
               <div className={`${styles.foods} col-12 col-md-3`}>
                     <Image src="/images/on-time-delivery.png" alt='' width={34} height={40}/>
                     <h4>All Kinds of Foods</h4>
-                    <p>
-                      Lorem Ipsum is simply dummy text of the printing and type setting industry.
-                    </p>
+                    <p>Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
               </div>
 
           </div>
@@ -250,4 +180,14 @@ export default function Home() {
         
     </>
   )
+}
+
+
+export const getServerSideProps = async () => {
+  const res = await axios.get("http://localhost:3000/api/products")
+  return{
+    props:{
+      pizzaList: res.data
+    }
+  }
 }
