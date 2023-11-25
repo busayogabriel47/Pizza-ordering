@@ -14,7 +14,7 @@ const Adminpage = ({orders, products}) => {
     //Delete product on admin page
     const handleDelete = async (id) => {
         try{
-            const res = await axios.delete('http://localhost:3000/api/products/' + id)
+            const res = await axios.delete('https://pizza-ordering-anno.onrender.com/api/products/' + id)
             setPizzaList(pizzaList.filter(pizza=> pizza._id !== id))
         }catch(err){
             console.log(err)
@@ -29,7 +29,7 @@ const Adminpage = ({orders, products}) => {
         const currentStatus = item.status
 
         try {
-            const res = await axios.put("http://localhost:3000/api/orders/" + id, 
+            const res = await axios.put("https://pizza-ordering-anno.onrender.com/api/orders/" + id, 
             {status: currentStatus + 1})
             setOrderList([
                 res.data,
@@ -142,8 +142,8 @@ if(myCookie.token !== process.env.TOKEN){
 
 
 
-    const productRes = await axios.get("http://localhost:3000/api/products");
-    const orderRes = await axios.get("http://localhost:3000/api/orders");
+    const productRes = await axios.get("https://pizza-ordering-anno.onrender.com/api/products");
+    const orderRes = await axios.get("https://pizza-ordering-anno.onrender.com/api/orders");
 
     return{
         props:{

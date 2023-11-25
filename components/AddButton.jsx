@@ -41,7 +41,7 @@ function AddButton({setClose}) {
         };
 
         {/* Make Api calls */}
-        await axios.post("http://localhost:3000/api/products", newPizza)
+        await axios.post("https://pizza-ordering-anno.onrender.com/api/products", newPizza)
         }catch(err){
             console.log(err)
         }

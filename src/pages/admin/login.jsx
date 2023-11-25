@@ -16,7 +16,7 @@ const router = useRouter();
 
   const handleClick = async () => {
     try {
-      await axios.post("http://localhost:3000/api/login", {
+      await axios.post("https://pizza-ordering-anno.onrender.com/api/login", {
         username,
         password,
       });

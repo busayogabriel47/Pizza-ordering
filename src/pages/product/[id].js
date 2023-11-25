@@ -120,7 +120,7 @@ const handleClick = () => {
 
 {/* Fetch single product using the id */}
 export const getServerSideProps = async ({params}) => {
-  const res = await axios.get(`http://localhost:3000/api/products/${params.id}`)
+  const res = await axios.get(`https://pizza-ordering-anno.onrender.com/api/products/${params.id}`)
   return{
     props:{
       pizza: res.data
