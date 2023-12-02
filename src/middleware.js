@@ -16,3 +16,8 @@ export function middleware(){
  
      return res
 }
+
+
+export const config = {
+    matcher: '/api/:path*'
+}
