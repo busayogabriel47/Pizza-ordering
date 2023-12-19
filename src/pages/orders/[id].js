@@ -117,7 +117,7 @@ const Order = ({order}) => {
   )
 }
 
-
+//Get single order
 export const getServerSideProps = async ({ params }) => {
     const res = await axios.get(`https://pizza-ordering-anno.onrender.com/api/orders/${params.id}`);
     return{

@@ -4,7 +4,7 @@ import styles from "../src/styles/Home.module.css"
 import Link from 'next/link'
 
 
-const PizzaList = ({pizzaList}) => {
+const PizzaList = ({pizzaList}) => {//pizzaList props from products.js
   return (
     <div>
          {/* Popular Dishes*/}

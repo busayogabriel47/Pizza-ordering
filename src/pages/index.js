@@ -182,7 +182,7 @@ export default function Home({pizzaList}) {
   )
 }
 
-
+//fetch all Pizza in Homepage
 export const getServerSideProps = async () => {
   const res = await axios.get("https://pizza-ordering-anno.onrender.com/api/products")
   return{

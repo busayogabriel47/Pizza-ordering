@@ -62,7 +62,7 @@ const [close, setClose] = useState(true);
   )
 }
 
-
+//Fetch all Pizzas
 export const getServerSideProps = async(ctx) => {
 const myCookie = ctx.req?.cookies || "";
 
