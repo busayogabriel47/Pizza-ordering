@@ -3,9 +3,9 @@ import cookie from "cookie";
 const handler = (req, res) => {
 
   //Set CORS headers
-  res.setHeaders('Access-Control-Allow-Credetials', 'true');
-  res.setHeaders('Access-Control-Allow-Origin', '*');
-  res.setHeaders('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Replace '*' with your specific origin(s)
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
